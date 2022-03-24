@@ -20,23 +20,25 @@ document.querySelector("#searchForm").addEventListener("submit" , (e) =>{
 async function getData(value) {
   const rawData = await fetch(API)
   const bikes = await rawData.json()
-  const ul = document.querySelector(".siteList")
-
   const datas = bikes.filter((element) => element.ar.includes(value))
 
+  addLi(datas)
+}
+
+
+function createdLi(station)  {  
+  const newLi =`<li class="list-group-item fs-5">
+  <i class="fas fa-bicycle"></i>
+  ${station.sna.replace("YouBike2.0_","")} (${station.sbi})<br>
+  <small class="text-muted">${station.ar})</small>
+  </li>` 
+
+  return newLi
+}
+
+function addLi(datas) {
   datas.forEach((data) => {
     const selectData =  createdLi(data)
     ul.insertAdjacentHTML("afterbegin", selectData)
   });  
-}
-
-
-function createdLi(x)  {  
-  const newLi =`<li class="list-group-item fs-5">
-  <i class="fas fa-bicycle"></i>
-  ${x.sna.replace("YouBike2.0_","")} (${x.sbi})<br>
-  <small class="text-muted">${x.ar})</small>
-  </li>` 
-
-  return newLi
 }
